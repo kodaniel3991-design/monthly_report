@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Data (DB, 출력 파일)
+data/monthly_report.db
+data/test_*
+data/templates/
+
+# Environment
+.env
+*.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+~$*
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Unnecessary files
+_danawa.json
+*.code-workspace
+monthly_report_work_sequence.html
+data/template_2sheets.xlsx
+data/test_*
+
+# Root level duplicates (pages/ 폴더가 실제 사용됨)
+/01_*.py
+/02_*.py
+/03_*.py
+/04_*.py
+/05_*.py
+/06_*.py
+/07_*.py
+/08_*.py
