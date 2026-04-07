@@ -9,17 +9,25 @@ import json
 import re
 from pathlib import Path
 
-# .env에서 키 로드
-_env_path = Path(__file__).parent / ".env"
-if _env_path.exists():
-    for line in _env_path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and "=" in line and not line.startswith("#"):
-            k, v = line.split("=", 1)
-            os.environ.setdefault(k.strip(), v.strip())
+# 키 로드: Streamlit Secrets → .env → 환경변수 순서
+try:
+    import streamlit as st
+    CLIENT_ID = st.secrets.get("NAVER_CLIENT_ID", "")
+    CLIENT_SECRET = st.secrets.get("NAVER_CLIENT_SECRET", "")
+except Exception:
+    CLIENT_ID = ""
+    CLIENT_SECRET = ""
 
-CLIENT_ID = os.environ.get("NAVER_CLIENT_ID", "")
-CLIENT_SECRET = os.environ.get("NAVER_CLIENT_SECRET", "")
+if not CLIENT_ID:
+    _env_path = Path(__file__).parent / ".env"
+    if _env_path.exists():
+        for line in _env_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line and "=" in line and not line.startswith("#"):
+                k, v = line.split("=", 1)
+                os.environ.setdefault(k.strip(), v.strip())
+    CLIENT_ID = os.environ.get("NAVER_CLIENT_ID", "")
+    CLIENT_SECRET = os.environ.get("NAVER_CLIENT_SECRET", "")
 
 
 def _clean_html(text: str) -> str:
