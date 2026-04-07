@@ -112,8 +112,16 @@ for tab, company, max_news in COMPANIES:
         # 검색 실행
         search_key = f"sr_{company}"
         if do_search and keyword.strip():
-            results = search_news_with_summary(keyword.strip(), display=10, max_sentences=5)
-            st.session_state[search_key] = results
+            try:
+                with st.spinner("뉴스 검색 중..."):
+                    results = search_news_with_summary(keyword.strip(), display=10, max_sentences=5)
+                    st.session_state[search_key] = results
+                    if not results:
+                        st.warning("검색 결과가 없습니다. 네이버 API 키를 확인하세요.")
+            except Exception as e:
+                st.error(f"검색 실패: {e}")
+                import traceback
+                st.code(traceback.format_exc())
 
         # 검색 결과 표시 → 체크하면 자동 입력
         results = st.session_state.get(search_key, [])
