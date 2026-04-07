@@ -287,16 +287,6 @@ with tab5:
                                            url_top=url_top if url_top else None,
                                            url_share=url_share if url_share else None)
                     st.session_state["danawa_data"] = danawa
-
-                    for comp in ["현대", "기아", "GM", "르노코리아", "KG모빌리티"]:
-                        st.session_state[f"ms_{comp}"] = float(danawa["market_share"].get(comp, 0))
-
-                    for t in danawa.get("top10", []):
-                        r = t["rank"]
-                        st.session_state[f"tm_{r}"] = t["model"]
-                        st.session_state[f"tc_{r}"] = t["maker"]
-                        st.session_state[f"tq_{r}"] = t["sales"]
-
                     st.success(f"수집 완료! TOP {len(danawa['top10'])}개 모델, 총 {danawa['total_sales']:,}대")
                     st.rerun()
                 except Exception as e:
