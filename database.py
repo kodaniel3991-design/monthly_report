@@ -7,7 +7,13 @@ import sqlite3
 import os
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent / "data" / "monthly_report.db"
+import platform
+
+if platform.system() == "Windows":
+    DB_PATH = Path(__file__).parent / "data" / "monthly_report.db"
+    DB_PATH.parent.mkdir(exist_ok=True)
+else:
+    DB_PATH = Path("/tmp") / "monthly_report.db"
 
 
 def get_conn():
