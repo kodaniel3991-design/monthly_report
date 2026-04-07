@@ -299,6 +299,8 @@ with tab5:
                     st.rerun()
                 except Exception as e:
                     st.error(f"수집 실패: {e}")
+                    import traceback
+                    st.code(traceback.format_exc())
 
     danawa = st.session_state.get("danawa_data", None)
 
